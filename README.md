@@ -12,4 +12,23 @@
 
 ## ✨ Features
 
-- [ ] TBD
+- [ ] Setup GitHub Action and Artifact for this project
+
+---
+
+## 🏗️ Build
+
+1. **Navigate to project directory and install npm dependencies:**
+   
+   ```sh
+    npm install
+    npm run postinstall
+   ```
+
+2. **Run prebuild and build project:**
+   **Android:**
+   ```sh
+   npx expo prebuild --platform android
+   cd android
+   ./gradlew assembleRelease
+   ```
