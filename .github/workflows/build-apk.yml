@@ -80,4 +80,4 @@ jobs:
             tag_name: ${{ steps.create_tag.outputs.tag_name }}
             generate_release_notes: true
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GITHUB_TOKEN: ${{ secrets.GH_PAT }}
