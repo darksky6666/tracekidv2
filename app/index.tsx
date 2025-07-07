@@ -1,95 +1,209 @@
-import * as React from 'react';
-import { View } from 'react-native';
-import Animated, { FadeInUp, FadeOutDown, LayoutAnimationConfig } from 'react-native-reanimated';
-import { Info } from '~/lib/icons/Info';
-import { Avatar, AvatarFallback, AvatarImage } from '~/components/ui/avatar';
-import { Button } from '~/components/ui/button';
+import React from "react";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '~/components/ui/card';
-import { Progress } from '~/components/ui/progress';
-import { Text } from '~/components/ui/text';
-import { Tooltip, TooltipContent, TooltipTrigger } from '~/components/ui/tooltip';
+  View,
+  Text,
+  TextInput,
+  Image,
+  useWindowDimensions,
+  SafeAreaView,
+  ScrollView,
+} from "react-native";
+import { Button } from "~/components/ui/button";
+import Animated, { FadeInUp } from "react-native-reanimated";
+import { AntDesign, FontAwesome } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 
-const GITHUB_AVATAR_URI =
-  'https://i.pinimg.com/originals/ef/a2/8d/efa28d18a04e7fa40ed49eeb0ab660db.jpg';
+const LoginScreen = () => {
+  const { width } = useWindowDimensions();
+  const router = useRouter();
 
-export default function Screen() {
-  const [progress, setProgress] = React.useState(78);
+  // Responsive paddings and image size
+  const containerPadding = width < 400 ? 16 : 24;
+  const imageSize = width < 400 ? 72 : 96;
 
-  function updateProgressValue() {
-    setProgress(Math.floor(Math.random() * 100));
-  }
   return (
-    <View className='flex-1 justify-center items-center gap-5 p-6 bg-secondary/30'>
-      <Card className='w-full max-w-sm p-6 rounded-2xl'>
-        <CardHeader className='items-center'>
-          <Avatar alt="Rick Sanchez's Avatar" className='w-24 h-24'>
-            <AvatarImage source={{ uri: GITHUB_AVATAR_URI }} />
-            <AvatarFallback>
-              <Text>RS</Text>
-            </AvatarFallback>
-          </Avatar>
-          <View className='p-3' />
-          <CardTitle className='pb-2 text-center'>Rick Sanchez</CardTitle>
-          <View className='flex-row'>
-            <CardDescription className='text-base font-semibold'>Scientist</CardDescription>
-            <Tooltip delayDuration={150}>
-              <TooltipTrigger className='px-2 pb-0.5 active:opacity-50'>
-                <Info size={14} strokeWidth={2.5} className='w-4 h-4 text-foreground/70' />
-              </TooltipTrigger>
-              <TooltipContent className='py-2 px-4 shadow'>
-                <Text className='native:text-lg'>Freelance</Text>
-              </TooltipContent>
-            </Tooltip>
-          </View>
-        </CardHeader>
-        <CardContent>
-          <View className='flex-row justify-around gap-3'>
-            <View className='items-center'>
-              <Text className='text-sm text-muted-foreground'>Dimension</Text>
-              <Text className='text-xl font-semibold'>C-137</Text>
-            </View>
-            <View className='items-center'>
-              <Text className='text-sm text-muted-foreground'>Age</Text>
-              <Text className='text-xl font-semibold'>70</Text>
-            </View>
-            <View className='items-center'>
-              <Text className='text-sm text-muted-foreground'>Species</Text>
-              <Text className='text-xl font-semibold'>Human</Text>
-            </View>
-          </View>
-        </CardContent>
-        <CardFooter className='flex-col gap-3 pb-0'>
-          <View className='flex-row items-center overflow-hidden'>
-            <Text className='text-sm text-muted-foreground'>Productivity:</Text>
-            <LayoutAnimationConfig skipEntering>
-              <Animated.View
-                key={progress}
-                entering={FadeInUp}
-                exiting={FadeOutDown}
-                className='w-11 items-center'
-              >
-                <Text className='text-sm font-bold text-sky-600'>{progress}%</Text>
-              </Animated.View>
-            </LayoutAnimationConfig>
-          </View>
-          <Progress value={progress} className='h-2' indicatorClassName='bg-sky-600' />
-          <View />
-          <Button
-            variant='outline'
-            className='shadow shadow-foreground/5'
-            onPress={updateProgressValue}
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#fff" }}>
+      <ScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: "center",
+          paddingHorizontal: containerPadding,
+        }}
+        keyboardShouldPersistTaps="handled"
+      >
+        <Animated.View
+          entering={FadeInUp.duration(500)}
+          style={{ alignItems: "center", marginBottom: 40 }}
+        >
+          <Image
+            source={require("../assets/images/icon.png")}
+            style={{
+              width: imageSize,
+              height: imageSize,
+              marginBottom: 16,
+              resizeMode: "contain",
+            }}
+          />
+          <Text
+            style={{
+              fontSize: width < 400 ? 24 : 30,
+              fontWeight: "bold",
+              color: "#000",
+            }}
           >
-            <Text>Update</Text>
+            Trace Kid
+          </Text>
+        </Animated.View>
+        <Animated.View entering={FadeInUp.delay(200).duration(500)}>
+          <Text
+            style={{
+              fontSize: width < 400 ? 16 : 18,
+              fontWeight: "600",
+              textAlign: "center",
+              color: "#000",
+              marginBottom: 8,
+            }}
+          >
+            Create an account
+          </Text>
+          <Text
+            style={{
+              textAlign: "center",
+              color: "#6B7280",
+              marginBottom: 24,
+              fontSize: width < 400 ? 13 : 15,
+            }}
+          >
+            Enter your email to sign up for this app
+          </Text>
+
+          <TextInput
+            style={{
+              borderWidth: 1,
+              borderColor: "#D1D5DB",
+              borderRadius: 16,
+              paddingHorizontal: 16,
+              paddingVertical: 12,
+              marginBottom: 16,
+              color: "#000",
+              fontSize: width < 400 ? 14 : 16,
+            }}
+            placeholder="email@domain.com"
+            placeholderTextColor="#9CA3AF"
+            keyboardType="email-address"
+          />
+
+          <Button
+            style={{
+              backgroundColor: "#000",
+              paddingVertical: 12,
+              borderRadius: 16,
+            }}
+            onPress={() => {
+              router.navigate("/testroute");
+            }}
+          >
+            <Text
+              style={{
+                color: "#fff",
+                fontWeight: "500",
+                fontSize: width < 400 ? 14 : 16,
+              }}
+            >
+              Continue
+            </Text>
           </Button>
-        </CardFooter>
-      </Card>
-    </View>
+        </Animated.View>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginVertical: 24,
+          }}
+        >
+          <View style={{ flex: 1, height: 1, backgroundColor: "#D1D5DB" }} />
+          <Text style={{ marginHorizontal: 16, color: "#6B7280" }}>or</Text>
+          <View style={{ flex: 1, height: 1, backgroundColor: "#D1D5DB" }} />
+        </View>
+
+        <Animated.View entering={FadeInUp.delay(400).duration(500)}>
+          <Button
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "#F3F4F6",
+              paddingVertical: 12,
+              borderRadius: 16,
+              marginBottom: 12,
+            }}
+            variant="outline"
+          >
+            <AntDesign
+              name="google"
+              size={20}
+              color="black"
+              style={{ marginRight: 8 }}
+            />
+            <Text
+              style={{
+                fontWeight: "500",
+                color: "#000",
+                fontSize: width < 400 ? 14 : 16,
+              }}
+            >
+              Continue with Google
+            </Text>
+          </Button>
+
+          <Button
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: "#F3F4F6",
+              paddingVertical: 12,
+              borderRadius: 16,
+            }}
+            variant="outline"
+          >
+            <FontAwesome
+              name="apple"
+              size={20}
+              color="black"
+              style={{ marginRight: 8 }}
+            />
+            <Text
+              style={{
+                fontWeight: "500",
+                color: "#000",
+                fontSize: width < 400 ? 14 : 16,
+              }}
+            >
+              Continue with Apple
+            </Text>
+          </Button>
+        </Animated.View>
+        <Text
+          style={{
+            textAlign: "center",
+            fontSize: width < 400 ? 10 : 12,
+            color: "#6B7280",
+            marginTop: 24,
+          }}
+        >
+          By clicking continue, you agree to our{" "}
+          <Text style={{ textDecorationLine: "underline" }}>
+            Terms of Service
+          </Text>{" "}
+          and{" "}
+          <Text style={{ textDecorationLine: "underline" }}>
+            Privacy Policy
+          </Text>
+        </Text>
+      </ScrollView>
+    </SafeAreaView>
   );
-}
+};
+
+export default LoginScreen;
