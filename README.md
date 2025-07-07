@@ -12,7 +12,7 @@
 
 ## ✨ Features
 
-- [ ] Setup GitHub Action and Artifact for this project
+- [ ] Login with Firebase
 
 ---
 
