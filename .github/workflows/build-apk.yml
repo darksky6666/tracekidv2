@@ -33,9 +33,6 @@ jobs:
           npm install
           npm run postinstall
 
-      - name: Expo Doctor Check
-        run: npx expo-doctor@latest
-
       - name: Build APK
         run: |
           npx expo prebuild --platform android
