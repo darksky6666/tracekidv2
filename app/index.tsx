@@ -100,7 +100,7 @@ const LoginScreen = () => {
               borderRadius: 16,
             }}
             onPress={() => {
-              router.navigate("/testroute");
+              router.navigate("/home");
             }}
           >
             <Text

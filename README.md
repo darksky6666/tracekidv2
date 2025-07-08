@@ -22,23 +22,22 @@ You can download the most recent version of Trace Kid V2 from
 
 ---
 
-## ✨ Features
-
-- [ ] Login with Firebase
-
----
-
 ## 🏗️ Build
 
 1. **Navigate to project directory and install npm dependencies:**
    
    ```sh
     npm install
-    npm run postinstall
    ```
 
 2. **Run prebuild and build project:**
-   **Android:**
+   
+   **Development:**
+   ```sh
+    npm run dev:android
+   ```
+
+   **Production:**
    ```sh
    npx expo prebuild --platform android
    cd android
