@@ -49,8 +49,7 @@ export function VoiceModal({ visible, onClose, onResult }: VoiceModalProps) {
       Toast.show({
         type: "error",
         text1: "Mic Permission",
-        text2:
-          "Permission required. Click to fix.",
+        text2: "Permission required. Click to fix.",
         position: "bottom",
         onPress() {
           Linking.openSettings();
@@ -82,10 +81,13 @@ export function VoiceModal({ visible, onClose, onResult }: VoiceModalProps) {
   });
 
   useSpeechRecognitionEvent("end", () => {
-    console.log("[Speech] Ended");
+    console.log("Speech end");
     setIsListening(false);
-    onClose();
-    if (transcript.trim()) onResult(transcript.trim());
+    setTimeout(() => {
+      stopListening();
+      if (transcript.trim()) onResult(transcript.trim());
+      onClose();
+    }, 700);
   });
 
   useSpeechRecognitionEvent("error", (e) => {
