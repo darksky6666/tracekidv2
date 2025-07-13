@@ -18,7 +18,6 @@ export default function TabLayout() {
       backBehavior="initialRoute"
       screenOptions={({ route }) => ({
         tabBarActiveTintColor: "black",
-        animation: "shift",
         tabBarShowLabel: false,
         tabBarButton: (props) => {
           const filteredProps = Object.fromEntries(
@@ -35,6 +34,11 @@ export default function TabLayout() {
         },
         tabBarStyle: {
           height: 55 + insets.bottom,
+        },
+        tabBarHideOnKeyboard: true,
+        headerTitleStyle: {
+          fontWeight: "bold",
+          color: "#0c4e80",
         },
         tabBarIcon: ({ color, size, focused }) => {
           switch (route.name) {
@@ -81,18 +85,12 @@ export default function TabLayout() {
         name="chat"
         options={{
           title: "Chat",
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
         }}
       />
       <Tabs.Screen
         name="home"
         options={{
           title: "Trace Kid",
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
           headerRight: () => {
             return (
               <TouchableOpacity
@@ -110,18 +108,12 @@ export default function TabLayout() {
         name="feed"
         options={{
           title: "Feed",
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
           title: "Profile",
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
         }}
       />
     </Tabs>
