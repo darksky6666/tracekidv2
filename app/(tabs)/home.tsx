@@ -113,8 +113,8 @@ export default function HomeScreen() {
 
       {/* Recent Activity */}
 
-      <View className="flex-col gap-2 mt-5">
-        <View className="flex-row items-center gap-4 p-2">
+      <View className="flex-col gap-2 mt-3">
+        <View className="flex-row items-center gap-4 py-2 pl-4">
           <Text className="font-semibold text-word text-lg">
             Recent Activity
           </Text>
@@ -124,7 +124,7 @@ export default function HomeScreen() {
             }}
           >
             <View className="bg-gray-200 rounded-full p-2">
-              <Ionicons name="chevron-forward" size={20} color="black" />
+              <Ionicons name="chevron-forward" size={18} color="black" />
             </View>
           </Pressable>
         </View>

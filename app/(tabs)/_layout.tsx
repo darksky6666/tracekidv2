@@ -73,21 +73,6 @@ export default function TabLayout() {
       })}
     >
       <Tabs.Screen
-        name="map"
-        options={{
-          title: "Location",
-          headerTitleStyle: {
-            fontWeight: "bold",
-          },
-        }}
-      />
-      <Tabs.Screen
-        name="chat"
-        options={{
-          title: "Chat",
-        }}
-      />
-      <Tabs.Screen
         name="home"
         options={{
           title: "Trace Kid",
@@ -101,6 +86,21 @@ export default function TabLayout() {
                 <Ionicons name="settings-outline" size={24} color="black" />
               </TouchableOpacity>
             );
+          },
+        }}
+      />
+      <Tabs.Screen
+        name="chat"
+        options={{
+          title: "Chat",
+        }}
+      />
+      <Tabs.Screen
+        name="map"
+        options={{
+          title: "Location",
+          headerTitleStyle: {
+            fontWeight: "bold",
           },
         }}
       />
