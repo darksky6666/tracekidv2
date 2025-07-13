@@ -33,6 +33,15 @@ jobs:
           npm install
           npm run postinstall
 
+      - name: Create .env file from secrets
+        run: |
+          echo "EXPO_PUBLIC_OPENAI_API_KEY=\"${EXPO_PUBLIC_OPENAI_API_KEY}\"" >> .env
+        env:
+          EXPO_PUBLIC_OPENAI_API_KEY: ${{ secrets.EXPO_PUBLIC_OPENAI_API_KEY }}
+
+      - name: Expo Doctor Check
+        run: npx expo-doctor@latest
+
       - name: Build APK
         run: |
           npx expo prebuild --platform android
@@ -58,7 +67,7 @@ jobs:
         with:
           name: app-release.apk
           path: .
-      
+
       - name: Changing timezone for tag name
         uses: szenius/set-timezone@v2.0
         with:
@@ -69,15 +78,15 @@ jobs:
         run: |
           TAG_NAME="release-$(date +'%Y%m%d%H%M%S')"
           echo "tag_name=${TAG_NAME}" >> $GITHUB_OUTPUT
-    
+
       - name: Print Tag Name
         run: echo "TAG_NAME=${{ steps.create_tag.outputs.tag_name }}"
-  
+
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
-            files: ./app-release.apk
-            tag_name: ${{ steps.create_tag.outputs.tag_name }}
-            generate_release_notes: true
+          files: ./app-release.apk
+          tag_name: ${{ steps.create_tag.outputs.tag_name }}
+          generate_release_notes: true
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GH_PAT }}
