@@ -26,6 +26,7 @@ const pulseAnim = {
 export function VoiceModal({ visible, onClose, onResult }: VoiceModalProps) {
   const [transcript, setTranscript] = useState("");
   const [isListening, setIsListening] = useState(false);
+  let finalText = "";
 
   // Start on mount if visible
   useEffect(() => {
@@ -75,17 +76,24 @@ export function VoiceModal({ visible, onClose, onResult }: VoiceModalProps) {
   });
 
   useSpeechRecognitionEvent("result", (event) => {
-    const text = event.results?.[0]?.transcript || "";
-    console.log("[Speech] Transcript:", text);
+    const res = event.results?.[0];
+    if (!res) return;
+    const text = res.transcript;
     setTranscript(text);
+    if (event.isFinal) {
+      finalText = text;
+    }
   });
 
   useSpeechRecognitionEvent("end", () => {
     console.log("Speech end");
     setIsListening(false);
+    const final = finalText || transcript;
     setTimeout(() => {
       stopListening();
-      if (transcript.trim()) onResult(transcript.trim());
+      if (final) {
+        onResult(final);
+      }
       onClose();
     }, 1000);
   });
@@ -126,13 +134,13 @@ export function VoiceModal({ visible, onClose, onResult }: VoiceModalProps) {
                   width: 125,
                   height: 125,
                   borderRadius: 75,
-                  backgroundColor: "rgba(251,191,36,0.3)",
+                  backgroundColor: "#c7e4f2",
                 }}
               />
             ))}
           <TouchableOpacity
             onPress={stopListening}
-            className="bg-yellow-300 p-6 rounded-full"
+            className="bg-word p-6 rounded-full"
           >
             <Ionicons name={"mic"} size={48} color="#fff" />
           </TouchableOpacity>

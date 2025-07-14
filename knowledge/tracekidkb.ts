@@ -1,15 +1,14 @@
 export const tracekidKb = `
 # Where Andren Location
 
-Andren is located at:
-Playground Area: 3.0535290396556385,101.60003139693707
+Andren is located at the Playground Area: 3.0535290396556385,101.60003139693707
 
 https://maps.google.com/?q=3.0535290396556385,101.60003139693707
 You can open this link to see the exact location on Google Maps.
 
 # Andren Safety
 
-Andren playground is safe based on recent news history.  
+Your child, Andren is safe based on recent news history.  
 It has a safety score of 90%.  
 Additionally, the surrounding voice analysis matches familiar voice patterns, indicating no unusual sounds nearby.
 
