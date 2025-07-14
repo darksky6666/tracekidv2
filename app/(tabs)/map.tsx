@@ -8,6 +8,7 @@ import {
   Vibration,
   ActivityIndicator,
   Alert,
+  ScrollView,
 } from "react-native";
 import MapView, { Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
@@ -69,7 +70,9 @@ export default function MapScreen() {
               text: "Open Settings",
               onPress: () => {
                 if (Linking.sendIntent) {
-                  Linking.sendIntent("android.settings.LOCATION_SOURCE_SETTINGS");
+                  Linking.sendIntent(
+                    "android.settings.LOCATION_SOURCE_SETTINGS"
+                  );
                 } else {
                   Linking.openSettings();
                 }
@@ -260,27 +263,33 @@ export default function MapScreen() {
               </View>
             </Pressable>
           </View>
-
-          <Timeline
-            showTime={false}
-            data={timeline}
-            separator={false}
-            circleColor="#0c4e80"
-            lineColor="#0c4e80"
-            titleStyle={{
-              fontSize: 16,
-              fontWeight: 600,
-              color: "#0c4e80",
-            }}
-            descriptionStyle={{
-              color: "#0c4e80",
-            }}
-            detailContainerStyle={{
-              padding: 0,
-              paddingBottom: 5,
-              marginTop: -12,
-            }}
-          />
+          <ScrollView
+            className="flex-1"
+            showsVerticalScrollIndicator={false}
+            showsHorizontalScrollIndicator={false}
+          >
+            <Timeline
+              isUsingFlatlist={false}
+              showTime={false}
+              data={timeline}
+              separator={false}
+              circleColor="#0c4e80"
+              lineColor="#0c4e80"
+              titleStyle={{
+                fontSize: 16,
+                fontWeight: 600,
+                color: "#0c4e80",
+              }}
+              descriptionStyle={{
+                color: "#0c4e80",
+              }}
+              detailContainerStyle={{
+                padding: 0,
+                paddingBottom: 5,
+                marginTop: -12,
+              }}
+            />
+          </ScrollView>
         </Card>
       </View>
     </View>

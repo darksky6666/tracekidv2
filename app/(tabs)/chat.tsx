@@ -55,8 +55,8 @@ export default function ChatScreen() {
     <View
       className={`max-w-[70%] mb-4 rounded-2xl px-4 py-3 ${
         item.from === "user"
-          ? "self-end bg-yellow-300/80"
-          : "self-start bg-amber-100"
+          ? "self-end bg-bg"
+          : "self-start bg-word2"
       }`}
     >
       {item.isLoading ? (
@@ -91,20 +91,20 @@ export default function ChatScreen() {
                 }
               }}
             >
-              <Text className="text-black">{item.text}</Text>
+              <Text className="text-black font-medium">{item.text}</Text>
               <View className="flex-row items-center mt-1">
                 <Ionicons
                   name="information-circle-outline"
                   color="#0c4e80"
                   className="text-xs mr-1"
                 />
-                <Text className="text-word text-xs">
+                <Text className="text-black text-xs">
                   Link detected. Click to Navigate.
                 </Text>
               </View>
             </Pressable>
           ) : (
-            <Text className="text-black">{item.text}</Text>
+            <Text className="text-black font-medium">{item.text}</Text>
           )}
           <Text className="text-xs text-gray-500 mt-1 text-right">
             {item.timestamp}
@@ -115,7 +115,7 @@ export default function ChatScreen() {
   );
 
   return (
-    <>
+    <View className="flex-1 bg-white">
       <VoiceModal
         visible={voiceModalVisible}
         onClose={() => setVoiceModalVisible(false)}
@@ -160,13 +160,13 @@ export default function ChatScreen() {
           />
         </TouchableWithoutFeedback>
 
-        <View className="flex-row items-center px-2 py-2 mx-4 mb-2 border border-yellow-200 rounded-2xl">
+        <View className="flex-row items-center px-2 py-2 mx-4 mb-2 border border-word rounded-2xl">
           <TextInput
             placeholder="Message..."
             value={input}
             onChangeText={setInput}
             onSubmitEditing={handleSendText}
-            className="flex-1 bg-white px-4 py-2 text-base"
+            className="flex-1 bg-white px-4 py-2 font-medium"
             returnKeyType="send"
           />
           <TouchableOpacity
@@ -180,6 +180,6 @@ export default function ChatScreen() {
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
-    </>
+    </View>
   );
 }

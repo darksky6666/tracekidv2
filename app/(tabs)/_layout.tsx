@@ -6,7 +6,7 @@ import {
   AntDesign,
 } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { TouchableOpacity, View } from "react-native";
+import { Linking, TouchableOpacity, View } from "react-native";
 
 export default function TabLayout() {
   const insets = useSafeAreaInsets();
@@ -92,28 +92,36 @@ export default function TabLayout() {
       <Tabs.Screen
         name="chat"
         options={{
-          title: "Chat",
+          title: "AI Assistant",
         }}
       />
       <Tabs.Screen
         name="map"
         options={{
-          title: "Location",
-          headerTitleStyle: {
-            fontWeight: "bold",
+          title: "Live Location Tracking",
+          headerRight: () => {
+            return (
+              <TouchableOpacity
+                onPress={() => Linking.openURL("tel:999")}
+                style={{ marginRight: 16 }}
+                hitSlop={8}
+              >
+                <AntDesign name="exclamationcircle" size={24} color="black" />
+              </TouchableOpacity>
+            );
           },
         }}
       />
       <Tabs.Screen
         name="feed"
         options={{
-          title: "Feed",
+          title: "Activity Feed",
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
-          title: "Profile",
+          title: "Profile & Settings",
         }}
       />
     </Tabs>

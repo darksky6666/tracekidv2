@@ -9,6 +9,7 @@ module.exports = {
     extend: {
       colors: {
         word: '#0c4e80',
+        word2: '#c7e4f2',
         bg: '#ebf1f4',
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
