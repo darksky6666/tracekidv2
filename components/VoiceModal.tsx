@@ -87,7 +87,7 @@ export function VoiceModal({ visible, onClose, onResult }: VoiceModalProps) {
       stopListening();
       if (transcript.trim()) onResult(transcript.trim());
       onClose();
-    }, 700);
+    }, 1000);
   });
 
   useSpeechRecognitionEvent("error", (e) => {

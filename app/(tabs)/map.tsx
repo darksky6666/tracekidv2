@@ -22,6 +22,9 @@ const DEST = { latitude: 3.0535290396556385, longitude: 101.60003139693707 };
 
 export default function MapScreen() {
   const mapRef = useRef<MapView>(null);
+  const intervalId = useRef<ReturnType<typeof setInterval> | null>(null);
+  const [isChecking, setIsChecking] = useState(true);
+
   const [region, setRegion] = useState({
     latitude: DEST.latitude,
     longitude: DEST.longitude,
@@ -48,36 +51,57 @@ export default function MapScreen() {
     },
   ]);
 
-  // 1. Check services & permissions every 5 seconds
+  // Permission and services check
   useEffect(() => {
     const checkServices = async () => {
-      const { granted } = await Location.getForegroundPermissionsAsync();
       const servicesEnabled = await Location.hasServicesEnabledAsync();
-
-      if (!granted) {
-        Toast.show({
-          type: "error",
-          text1: "Location Permission",
-          text2: "Tap to enable.",
-          onPress: () => Linking.openSettings(),
-        });
-        setLocationAvailable(false);
-        return;
-      }
+      const { granted } = await Location.requestForegroundPermissionsAsync();
 
       if (!servicesEnabled) {
+        pauseChecking();
+
         Alert.alert(
           "Enable Location Services",
           "Please enable location services.",
           [
-            { text: "Cancel" },
+            { text: "Cancel", onPress: resumeChecking },
             {
               text: "Open Settings",
-              onPress: () =>
-                Linking.sendIntent("android.settings.LOCATION_SOURCE_SETTINGS"),
+              onPress: () => {
+                if (Linking.sendIntent) {
+                  Linking.sendIntent("android.settings.LOCATION_SOURCE_SETTINGS");
+                } else {
+                  Linking.openSettings();
+                }
+                resumeChecking();
+              },
             },
-          ]
+          ],
+          { cancelable: false }
         );
+
+        setLocationAvailable(false);
+        return;
+      }
+
+      if (!granted) {
+        pauseChecking();
+
+        Toast.show({
+          type: "error",
+          text1: "Location Permission",
+          text2: "Tap to enable.",
+          onPress: () => {
+            Linking.openSettings();
+            resumeChecking();
+          },
+          onHide: () => {
+            resumeChecking();
+          },
+          autoHide: true,
+          visibilityTime: 4000,
+        });
+
         setLocationAvailable(false);
         return;
       }
@@ -85,9 +109,35 @@ export default function MapScreen() {
       setLocationAvailable(true);
     };
 
-    checkServices();
-    const id = setInterval(checkServices, 5000);
-    return () => clearInterval(id);
+    const startChecking = () => {
+      checkServices();
+      if (intervalId.current === null) {
+        intervalId.current = setInterval(checkServices, 5000);
+      }
+      setIsChecking(true);
+    };
+
+    const pauseChecking = () => {
+      if (intervalId.current !== null) {
+        clearInterval(intervalId.current);
+        intervalId.current = null;
+      }
+      setIsChecking(false);
+    };
+
+    const resumeChecking = () => {
+      if (intervalId.current === null) {
+        checkServices(); // immediate check
+        intervalId.current = setInterval(checkServices, 5000);
+      }
+      setIsChecking(true);
+    };
+
+    startChecking();
+
+    return () => {
+      if (intervalId.current !== null) clearInterval(intervalId.current);
+    };
   }, []);
 
   // 2. Subscribe to location when available
@@ -138,10 +188,13 @@ export default function MapScreen() {
             provider={PROVIDER_GOOGLE}
             initialRegion={region}
             onMapReady={onMapReady}
+            showsUserLocation={true}
+            zoomControlEnabled={true}
+            // loadingEnabled={true}
           >
             {currentLoc && (
               <>
-                <Marker coordinate={currentLoc} title="You're here">
+                {/* <Marker coordinate={currentLoc} title="You're here">
                   <Svg height={30} width={30}>
                     <Circle
                       cx={15}
@@ -152,7 +205,7 @@ export default function MapScreen() {
                       strokeWidth={3}
                     />
                   </Svg>
-                </Marker>
+                </Marker> */}
                 <Marker coordinate={DEST} title="Destination" />
 
                 <MapViewDirections
