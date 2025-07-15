@@ -136,11 +136,11 @@ export default function ChatScreen() {
       />
 
       <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        behavior={"height"}
         keyboardVerticalOffset={100}
         style={{ flex: 1, backgroundColor: "#fff" }}
       >
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+        {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
           <FlatList
             data={messages}
             keyExtractor={(item) => item.id}
@@ -149,7 +149,7 @@ export default function ChatScreen() {
             onContentSizeChange={() =>
               setTimeout(
                 () => flatListRef.current?.scrollToEnd({ animated: true }),
-                50
+                100
               )
             }
             onLayout={() =>
@@ -158,7 +158,7 @@ export default function ChatScreen() {
             ListFooterComponent={<View style={{ height: 20 }} />}
             renderItem={renderItem}
           />
-        </TouchableWithoutFeedback>
+        {/* </TouchableWithoutFeedback> */}
 
         <View className="flex-row items-center px-2 py-2 mx-4 mb-2 border border-word rounded-2xl">
           <TextInput

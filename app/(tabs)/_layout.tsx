@@ -76,17 +76,17 @@ export default function TabLayout() {
         name="home"
         options={{
           title: "Trace Kid",
-          headerRight: () => {
-            return (
-              <TouchableOpacity
-                onPress={() => router.push("/profile")}
-                style={{ marginRight: 16 }}
-                hitSlop={8}
-              >
-                <Ionicons name="settings-outline" size={24} color="black" />
-              </TouchableOpacity>
-            );
-          },
+          // headerRight: () => {
+          //   return (
+          //     <TouchableOpacity
+          //       onPress={() => router.push("/setting")}
+          //       style={{ marginRight: 16 }}
+          //       hitSlop={8}
+          //     >
+          //       <Ionicons name="settings-outline" size={24} color="black" />
+          //     </TouchableOpacity>
+          //   );
+          // },
         }}
       />
       <Tabs.Screen

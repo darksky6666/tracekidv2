@@ -248,7 +248,7 @@ export default function MapScreen() {
           </View>
         </Card>
 
-        <Card className="flex-1 flex-col p-4 bg-white rounded-2xl shadow-lg gap-4">
+        <Card className="flex-1 flex-col px-4 pt-4 bg-white rounded-2xl shadow-lg gap-4">
           <View className="flex-row items-center gap-4">
             <Text className="font-semibold text-word text-lg">
               Today's Timeline
